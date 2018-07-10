@@ -16,7 +16,7 @@ plt.scatter(x, y)
 plt.text(0.02, 0.02, r'(0,height)')
 plt.text(0.02, 0.94, r'(0, 0)')
 plt.text(0.75, 0.02, r'(width,height)')
-plt.text(0.81, 0.94, r'(0, height)')
+plt.text(0.81, 0.94, r'(width, 0)')
 
 plt.xlabel('x')
 plt.ylabel('y')
