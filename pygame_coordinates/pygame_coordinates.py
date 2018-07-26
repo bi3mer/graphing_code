@@ -13,7 +13,7 @@ y = [0, 1, 1, 0]
 plt.scatter(x, y)
 
 # labels
-plt.text(0.02, 0.02, r'(0,height)')
+plt.text(0.02, 0.02, r'(width, 0)')
 plt.text(0.02, 0.94, r'(0, 0)')
 plt.text(0.75, 0.02, r'(width,height)')
 plt.text(0.81, 0.94, r'(0, height)')
