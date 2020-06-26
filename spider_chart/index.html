@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
+		<title>Sample Radar Chart</title>
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    
+    <style>
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+      
+      .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+      
+      input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+      }
+      
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+      
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+      
+      .slider.round:before {
+        border-radius: 50%;
+      }
+      </style>
+		
+		<style>
+			body {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 11px;
+				font-weight: 300;
+				fill: #242424;
+				text-align: center;
+				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				cursor: default;
+			}
+			
+			.legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+			
+			.tooltip {
+				fill: #333333;
+			}
+		</style>
+	
+	</head>
+	<body>
+    <h3 id="switchLabel">
+      User Data
+    </h3>
+    <label class="switch" id="switch">
+      <input type="checkbox" checked>
+      <span class="slider round"></span>
+    </label>
+
+		<div class="radarChart" id="radarChart"></div>
+
+    <script src="data.js"></script>
+		<script src="radarChart.js"></script>	
+		<script>
+      
+      /* adapted from of Radar chart design created by Nadieh Bremer */
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+
+      function draw(data) {
+        var color = d3.scale.ordinal()
+          .range(["#EDC951","#CC333F","#00A0B0"]);
+          
+        var radarChartOptions = {
+          w: width,
+          h: height,
+          margin: margin,
+          maxValue: 0.5,
+          levels: 5,
+          roundStrokes: true,
+          color: color
+        };
+        //Call function to draw the Radar chart
+        RadarChart(".radarChart", data, radarChartOptions);
+      }
+
+      let viewingUserData = true;
+      document.getElementById('switch').addEventListener('pointerup', () => {
+        document.getElementById("radarChart").innerHTML = "";
+        viewingUserData = !viewingUserData;
+
+        if (viewingUserData) {
+          draw(userData);
+          document.getElementById('switchLabel').innerHTML = 'User Data';
+        } else {
+          draw(clusterData);
+          document.getElementById('switchLabel').innerHTML = 'Cluster Data';
+        }
+      });
+
+      draw(userData);
+		</script>
+	</body>
+</html>
